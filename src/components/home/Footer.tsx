@@ -136,14 +136,42 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* The wordmark spans the frame exactly, so its edges line up with the
-          links above and the small print below. */}
+      {/* The wordmark and the builder's seal share the frame's full width, so
+          their edges line up with the links above and the small print below. */}
       <div className="frame pb-8">
-        <div className="@container">
-          <p aria-hidden className="select-none whitespace-nowrap font-display text-[33cqw] leading-[0.82]">
-            Popsule
-          </p>
+        <div className="flex items-center gap-[3vw]">
+          <div className="min-w-0 flex-1 @container">
+            <p aria-hidden className="select-none whitespace-nowrap font-display text-[33cqw] leading-[0.82]">
+              Popsule
+            </p>
+          </div>
+          {/* Credit for the builder: a seal that turns slowly beside the wordmark. */}
+          <a
+            href="https://yveskwameh.com"
+            target="_blank"
+            rel="noopener"
+            aria-label="Designed and built by Yves Kwameh (opens in a new tab)"
+            className="group relative aspect-square w-[clamp(5.5rem,14vw,10rem)] shrink-0"
+          >
+            <svg viewBox="0 0 100 100" aria-hidden className="absolute inset-0 animate-[spin_16s_linear_infinite] group-hover:[animation-duration:5s]">
+              <defs>
+                <path id="credit-ring" d="M50,50 m-39,0 a39,39 0 1,1 78,0 a39,39 0 1,1 -78,0" />
+              </defs>
+              <text className="fill-graphite text-[9.6px] font-medium tracking-[0.16em]">
+                <textPath href="#credit-ring">DESIGNED AND BUILT BY · YVES KWAMEH · </textPath>
+              </text>
+            </svg>
+            <span
+              aria-hidden
+              className="absolute inset-[27%] grid place-items-center rounded-full bg-graphite text-white transition-transform duration-500 group-hover:-rotate-45 group-hover:scale-110"
+            >
+              <svg width="40%" height="40%" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </span>
+          </a>
         </div>
+
         <div className="mt-6 flex flex-col gap-2 text-base text-muted sm:flex-row sm:justify-between">
           <p>© 2026 Popsule. All rights reserved.</p>
           <p className="flex gap-5">
