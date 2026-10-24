@@ -61,15 +61,31 @@ function Card({ product: p }: { product: Product }) {
             </li>
           ))}
         </ul>
+        {/* A dark arrow circle that stretches open under the words on hover. */}
         <Link
           href={`/build?d=${encodeSnapshot(startingSnapshot(p.id))}`}
           data-magnetic
-          className="group mt-auto inline-flex h-12 items-center justify-between gap-3 self-start rounded-full bg-graphite pl-6 pr-1.5 text-lg text-white transition-colors hover:bg-black"
+          className="group relative mt-auto inline-flex h-12 items-center self-start whitespace-nowrap rounded-full pl-16 pr-6 text-lg"
         >
-          Make it yours
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-white text-graphite transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-rotate-45" aria-hidden>
-            →
-          </span>
+          <span
+            aria-hidden
+            className="absolute inset-y-0 left-0 w-12 rounded-full bg-graphite transition-[width] duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:w-full group-focus-visible:w-full"
+          />
+          <svg
+            aria-hidden
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="absolute left-3.5 text-white transition-transform duration-500 group-hover:translate-x-1"
+          >
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+          <span className="relative transition-colors duration-300 group-hover:text-white group-focus-visible:text-white">Make it yours</span>
         </Link>
       </div>
     </div>

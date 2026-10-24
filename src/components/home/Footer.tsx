@@ -13,8 +13,8 @@ import SoftShadow from "@/components/canvas/SoftShadow";
 
 const columns = [
   { title: "Shop", links: [["Build your jar", "/build"], ["The range", "#range"], ["Pricing", "#pricing"]] },
-  { title: "Help", links: [["How it works", "#how"], ["Questions", "#questions"], ["Shipping and returns", "#questions"]] },
-  { title: "Popsule", links: [["Our glass", "#how"], ["Refill programme", "#how"], ["Instagram", "#"]] },
+  { title: "Help", links: [["How it works", "#how"], ["Questions", "#questions"], ["Shipping and returns", "/terms#delivery"]] },
+  { title: "Popsule", links: [["Our glass", "#how"], ["Refill programme", "#how"], ["Terms", "/terms"]] },
 ] as const;
 
 // A last look at the jar, then the usual footer: links, a refill-reminder
@@ -147,14 +147,17 @@ export default function Footer() {
         <div className="mt-6 flex flex-col gap-2 text-base text-muted sm:flex-row sm:justify-between">
           <p>© 2026 Popsule. All rights reserved.</p>
           <p className="flex gap-5">
-            <a href="#" className="hover:text-graphite">
+            <Link href="/privacy" className="hover:text-graphite">
               Privacy
-            </a>
-            <a href="#" className="hover:text-graphite">
+            </Link>
+            <Link href="/terms" className="hover:text-graphite">
               Terms
-            </a>
+            </Link>
           </p>
         </div>
+        <p className="mt-4 max-w-3xl text-sm leading-relaxed text-muted">
+          These statements have not been evaluated by the Food and Drug Administration. Popsule products are not intended to diagnose, treat, cure or prevent any disease.
+        </p>
       </div>
     </footer>
   );

@@ -182,3 +182,77 @@ em,
     scroll-behavior: auto !important;
   }
 }
+
+/* The left-hand scrollbar (components/ScrollRail.tsx) replaces the browser's. */
+html {
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+.scroll-rail {
+  position: fixed;
+  left: 0.375rem;
+  top: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 50;
+  width: 0.875rem;
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s;
+  touch-action: none;
+}
+/* A faint rail behind the handle. */
+.scroll-rail::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 50%;
+  width: 2px;
+  margin-left: -1px;
+  border-radius: 999px;
+  background: rgb(42 44 48 / 0.08);
+}
+.scroll-rail[data-awake="true"],
+.scroll-rail[data-dragging="true"],
+.scroll-rail:hover {
+  opacity: 1;
+}
+.scroll-rail[data-off="true"] {
+  display: none;
+}
+.scroll-rail-thumb {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 4px;
+  margin-left: -2px;
+  border-radius: 999px;
+  background: rgb(42 44 48 / 0.55);
+  cursor: grab;
+  transition:
+    width 0.25s,
+    margin 0.25s,
+    background-color 0.25s;
+}
+.scroll-rail:hover .scroll-rail-thumb,
+.scroll-rail[data-dragging="true"] .scroll-rail-thumb {
+  width: 8px;
+  margin-left: -4px;
+  background: var(--color-graphite);
+}
+.scroll-rail[data-dragging="true"] .scroll-rail-thumb {
+  cursor: grabbing;
+}
+
+/* Lists and emphasis inside the Privacy and Terms text. */
+.legal ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+.legal strong {
+  font-weight: 600;
+}

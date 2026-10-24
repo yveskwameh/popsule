@@ -7,10 +7,41 @@ import PriceBuilder from "@/components/home/PriceBuilder";
 import Footer from "@/components/home/Footer";
 import Faq from "@/components/home/Faq";
 import BagButton from "@/components/ui/BagButton";
+import { products } from "@/lib/brand";
+import { encodeSnapshot, priceOf, startingSnapshot } from "@/lib/lab";
+import { siteUrl } from "@/lib/site";
+
+// Structured data for search engines: the brand, the site and the four
+// starting formulas with their lowest monthly price.
+const url = (path: string) => new URL(path, siteUrl).href;
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "Organization", "@id": url("/#org"), name: "Popsule", url: url("/"), logo: url("/icon.svg") },
+    { "@type": "WebSite", "@id": url("/#site"), name: "Popsule", url: url("/"), publisher: { "@id": url("/#org") } },
+    ...products.map((p) => ({
+      "@type": "Product",
+      name: `${p.name} supplement refill`,
+      description: `A ${p.goal.toLowerCase()} formula with ${p.ingredients.join(" and ").toLowerCase()}, in a frosted glass jar printed with your name and refilled monthly.`,
+      brand: { "@id": url("/#org") },
+      category: "Dietary supplements",
+      image: url("/opengraph-image.png"),
+      url: url(`/build?d=${encodeSnapshot(startingSnapshot(p.id))}`),
+      offers: {
+        "@type": "Offer",
+        price: priceOf({ size: 30, goals: [p.id], metal: "satin" }).total,
+        priceCurrency: "USD",
+        availability: "https://schema.org/InStock",
+        url: url(`/build?d=${encodeSnapshot(startingSnapshot(p.id))}`),
+      },
+    })),
+  ],
+};
 
 export default function Home() {
   return (
     <main id="main">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
       <header className="fixed inset-x-0 top-0 z-20 flex items-center justify-between frame bg-mist/85 py-4 backdrop-blur-sm">
         <span className="font-display text-3xl">Popsule</span>
         <nav className="flex items-center gap-6 text-lg">
