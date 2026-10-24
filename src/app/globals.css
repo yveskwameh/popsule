@@ -1,0 +1,184 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+/* Brand tokens. Mirrors src/lib/brand.ts for the 3D side. The site only uses
+   white, mist and graphite; earth tones belong to the products. */
+@theme {
+  --color-white: #ffffff;
+  --color-mist: #f4f3f0;
+  --color-graphite: #2a2c30;
+  --color-muted: #6b6d72;
+  --color-line: #dddcd8;
+
+  --color-sage: #8e9a86;
+  --color-clay: #b98b6e;
+  --color-sand: #cbbfa6;
+  --color-slate: #6e7781;
+  --color-chalk: #f2f1ee;
+
+}
+
+/* Type: League Spartan for headlines (font-display), Urbanist for reading
+   (font-sans), DM Serif Display italic for accents (font-accent). The 3D
+   labels and the share poster read the same variables. */
+@theme inline {
+  --font-display: var(--font-spartan), "Futura", system-ui, sans-serif;
+  --font-sans: var(--font-urbanist), system-ui, sans-serif;
+  --font-accent: var(--font-dm-serif), Georgia, serif;
+}
+
+/* Anything you can press shows the hand, and gives a little when pressed. */
+@layer base {
+  a[href],
+  button:not(:disabled),
+  summary,
+  select,
+  [role="radio"],
+  [role="switch"],
+  label:has(> input:is([type="checkbox"], [type="radio"])) {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+  :is(a[href], button:not(:disabled)):active {
+    scale: 0.97;
+  }
+  /* Keyboard focus: a graphite ring with a white gap, visible on any fill. */
+  :focus-visible {
+    outline: 2px solid var(--color-graphite);
+    outline-offset: 3px;
+  }
+  input:focus-visible {
+    outline-offset: 1px;
+  }
+}
+
+body {
+  background: var(--color-white);
+  color: var(--color-graphite);
+  font-family: var(--font-sans);
+}
+
+/* Hierarchy. Headlines are tight, semibold geometric sans; anything set in
+   italic (the second line of a headline, eyebrows, descriptors) switches to
+   the serif, which is what gives the pairing its contrast. */
+.font-display {
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+em,
+.italic {
+  font-family: var(--font-accent);
+}
+.font-display em {
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+/* DM Serif Display is drawn for large sizes and gets heavy when small, so
+   fine-print italics stay in Urbanist. */
+.italic:is(.text-xs, .text-sm, .text-base:not(.md\:text-lg)),
+:is(.text-xs, .text-sm, .text-base) .italic {
+  font-family: var(--font-sans);
+}
+
+/* Horizontal padding that lines content up with a centred 80rem frame, so
+   text and 3D stay balanced on wide screens instead of hugging the edge. */
+@utility frame {
+  padding-inline: 1.5rem;
+  @media (width >= 48rem) {
+    padding-inline: max(2.5rem, calc(50% - 40rem));
+  }
+}
+
+@keyframes grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* A section that fills one screen on tablets and up: clear of the fixed
+   header at the top, breathing room at the bottom. Children that should take
+   the leftover height use flex-1 min-h-0. */
+@utility screen {
+  @media (width >= 48rem) {
+    display: flex;
+    flex-direction: column;
+    /* "safe" keeps the top in view if a section ever overflows a short screen. */
+    justify-content: safe center;
+    height: 100svh;
+    min-height: 40rem;
+    padding-top: 6.5rem;
+    padding-bottom: 2.5rem;
+  }
+}
+
+/* The trailing cursor ring (components/Cursor.tsx). The ring uses difference
+   blending so it reads on white, mist and graphite alike; as a label it turns
+   into a solid graphite pill. */
+.cursor-ring {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.cursor-ring[data-visible="true"] {
+  opacity: 1;
+}
+.cursor-ring-shape {
+  display: grid;
+  place-items: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: -0.625rem 0 0 -0.625rem;
+  border-radius: 999px;
+  border: 1px solid white;
+  mix-blend-mode: difference;
+  transition:
+    width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    height 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    margin 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 0.3s,
+    border-color 0.3s;
+}
+.cursor-ring-label {
+  font-size: 0.75rem;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.cursor-ring[data-mode="press"] .cursor-ring-shape {
+  width: 2rem;
+  height: 2rem;
+  margin: -1rem 0 0 -1rem;
+  background: rgb(255 255 255 / 0.9);
+}
+/* Beside the pointer rather than on it, so it never hides the jar. */
+.cursor-ring[data-mode="label"] .cursor-ring-shape {
+  width: 3rem;
+  height: 3rem;
+  margin: 0.625rem 0 0 0.625rem;
+  background: var(--color-graphite);
+  border-color: var(--color-graphite);
+  mix-blend-mode: normal;
+}
+.cursor-ring[data-mode="label"] .cursor-ring-label {
+  opacity: 1;
+}
+
+/* Reduced motion: things still change state, they just don't travel. The
+   scroll story stays scroll-driven (the reader moves it), smooth scrolling,
+   the trailing cursor and magnetic buttons switch off in their components,
+   and How it works stops auto-playing. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
