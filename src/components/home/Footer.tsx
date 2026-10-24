@@ -26,7 +26,7 @@ export default function Footer() {
   const handle = useHand(allHandling);
 
   return (
-    <footer className="bg-white">
+    <footer data-section="Get yours" className="bg-white">
       {/* Closing call to action. */}
       <div className="frame">
         <div className="grid grid-cols-1 items-center overflow-hidden rounded-3xl bg-graphite text-white md:grid-cols-2">

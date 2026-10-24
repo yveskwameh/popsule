@@ -29,7 +29,7 @@ export default function PriceBuilder() {
     setGoals((g) => (g.includes(id) ? (g.length > 1 ? g.filter((x) => x !== id) : g) : g.length < MAX_GOALS ? [...g, id] : g));
 
   return (
-    <section id="pricing" className="frame screen bg-mist py-24">
+    <section id="pricing" data-section="Pricing" className="frame screen bg-mist py-24">
       <div className="mb-12 grid grid-cols-1 items-end gap-6 md:mb-8 md:grid-cols-2">
         <h2 className="font-display text-5xl leading-none md:text-6xl">One price a month</h2>
         <p className="max-w-md text-lg leading-relaxed text-muted md:justify-self-end">

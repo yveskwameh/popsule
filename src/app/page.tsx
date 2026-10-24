@@ -25,7 +25,7 @@ const jsonLd = {
       description: `A ${p.goal.toLowerCase()} formula with ${p.ingredients.join(" and ").toLowerCase()}, in a frosted glass jar printed with your name and refilled monthly.`,
       brand: { "@id": url("/#org") },
       category: "Dietary supplements",
-      image: url("/opengraph-image.png"),
+      image: url("/opengraph-image.jpg"),
       url: url(`/build?d=${encodeSnapshot(startingSnapshot(p.id))}`),
       offers: {
         "@type": "Offer",
@@ -68,7 +68,7 @@ export default function Home() {
 
       <PriceBuilder />
 
-      <section id="questions" className="frame grid grid-cols-1 gap-10 py-24 md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] md:py-32">
+      <section id="questions" data-section="Questions" className="frame grid grid-cols-1 gap-10 py-24 md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] md:py-32">
         <h2 className="font-display text-5xl md:text-6xl">Questions</h2>
         <Faq />
       </section>

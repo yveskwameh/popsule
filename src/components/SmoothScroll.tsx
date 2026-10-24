@@ -4,22 +4,27 @@ import { useEffect, type ReactNode } from "react";
 import Lenis from "lenis";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
+// The live instance, for anything that wants to glide to a position.
+export let lenis: Lenis | null = null;
+
 // Lenis is driven by GSAP's ticker so smooth scroll and ScrollTrigger
 // share one clock and never drift apart.
 export default function SmoothScroll({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const lenis = new Lenis({ autoRaf: false });
-    lenis.on("scroll", ScrollTrigger.update);
+    const instance = new Lenis({ autoRaf: false });
+    lenis = instance;
+    instance.on("scroll", ScrollTrigger.update);
 
-    const tick = (time: number) => lenis.raf(time * 1000);
+    const tick = (time: number) => instance.raf(time * 1000);
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
 
     return () => {
       gsap.ticker.remove(tick);
-      lenis.destroy();
+      instance.destroy();
+      lenis = null;
     };
   }, []);
 

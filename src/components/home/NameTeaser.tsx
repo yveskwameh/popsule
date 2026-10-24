@@ -44,7 +44,7 @@ export default function NameTeaser() {
   );
 
   return (
-    <section className="frame screen bg-white py-24">
+    <section data-section="Make yours" className="frame screen bg-white py-24">
       <div className="mb-10 grid grid-cols-1 items-end gap-6 md:mb-6 md:grid-cols-2">
         <div>
           <p className="text-lg italic text-muted">Try it here</p>

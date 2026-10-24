@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 
-export type Section = { id: string; title: string; body: ReactNode };
+export type Section = { id: string; title: string; tag?: string; body: ReactNode }; // tag: one or two words for the scrollbar
 
 // Privacy and Terms: a contents list beside readable text, same frame and
 // type as the rest of the site.
@@ -41,7 +41,7 @@ export default function LegalPage({ eyebrow, title, intro, updated, sections }: 
 
           <div className="flex max-w-2xl flex-col gap-12">
             {sections.map((s, i) => (
-              <section key={s.id} id={s.id} className="scroll-mt-8">
+              <section key={s.id} id={s.id} data-section={s.tag ?? s.title} className="scroll-mt-8">
                 <h2 className="flex items-baseline gap-3 font-display text-3xl leading-tight">
                   <span className="text-lg text-muted tabular-nums">{String(i + 1).padStart(2, "0")}</span>
                   {s.title}

@@ -20,6 +20,7 @@ const sections: Section[] = [
   {
     id: "refills",
     title: "Monthly refills",
+    tag: "Refills",
     body: (
       <>
         <p>With Monthly refills, a new canister ships every 30 days and you&apos;re charged when it ships. We email you a few days before, so you can change your formula, skip a month or pause.</p>
@@ -35,6 +36,7 @@ const sections: Section[] = [
   {
     id: "returns",
     title: "Returns and breakage",
+    tag: "Returns",
     body: (
       <>
         <p>If your jar arrives damaged, tell us within 30 days and we&apos;ll replace it free. If it breaks later, we&apos;ll send a new one at cost, printed with the same name and tone.</p>
@@ -45,6 +47,7 @@ const sections: Section[] = [
   {
     id: "canisters",
     title: "Returning canisters",
+    tag: "Canisters",
     body: <p>Each refill comes with a prepaid sleeve. Send the empty canister back in it and we clean and refill it. It&apos;s optional, and free.</p>,
   },
   {
@@ -63,6 +66,7 @@ const sections: Section[] = [
   {
     id: "site",
     title: "Using the site",
+    tag: "The site",
     body: <p>The site, its designs, 3D models and words belong to Popsule. You&apos;re welcome to share links and pictures of your own jar. Please don&apos;t copy the rest.</p>,
   },
   {

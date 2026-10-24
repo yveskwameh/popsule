@@ -10,6 +10,7 @@ const sections: Section[] = [
   {
     id: "collect",
     title: "What we collect",
+    tag: "Collected",
     body: (
       <>
         <p>Only what we need to make and send your jar:</p>
@@ -33,6 +34,7 @@ const sections: Section[] = [
   {
     id: "use",
     title: "How we use it",
+    tag: "Use",
     body: (
       <>
         <p>To blend and print your order, ship it, send each monthly refill and email you a few days before it ships.</p>
@@ -44,6 +46,7 @@ const sections: Section[] = [
   {
     id: "browser",
     title: "On your device",
+    tag: "Device",
     body: (
       <>
         <p>Your bag, your current design and your recent orders are saved in your browser&apos;s local storage, so they&apos;re still there when you come back. They stay on your device.</p>
@@ -54,6 +57,7 @@ const sections: Section[] = [
   {
     id: "share",
     title: "Who we share it with",
+    tag: "Sharing",
     body: (
       <>
         <p>Only the companies that help us deliver your order:</p>
@@ -69,6 +73,7 @@ const sections: Section[] = [
   {
     id: "keep",
     title: "How long we keep it",
+    tag: "Keeping",
     body: (
       <p>
         Order records are kept for as long as tax law requires. If you cancel your refills, we keep your design for a year in case you come back, then delete it. Ask us and
@@ -79,6 +84,7 @@ const sections: Section[] = [
   {
     id: "rights",
     title: "Your choices",
+    tag: "Choices",
     body: (
       <>
         <p>You can ask to see the data we hold about you, correct it, download it or have it deleted. You can stop marketing emails with the link in any of them; order and refill emails continue while you have an active order.</p>

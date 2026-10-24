@@ -7,6 +7,14 @@ import { gsap, useGSAP } from "@/lib/gsap";
 import { products, toneHex } from "@/lib/brand";
 import { encodeSnapshot, startingSnapshot } from "@/lib/lab";
 import { chapters, HANDLE_UNTIL, rangeStep, story, type Chapter } from "@/lib/story";
+
+const chapterNames: Record<Chapter, string> = {
+  hero: "Intro",
+  anatomy: "Inside",
+  refill: "Refills",
+  year: "A year",
+  range: "Formulas",
+};
 import StudioLights from "@/components/canvas/StudioLights";
 import StoryScene from "./StoryScene";
 
@@ -120,6 +128,10 @@ export default function HomeStory() {
 
   return (
     <section ref={track} className="relative h-[1000vh] bg-mist" aria-label="How Popsule works">
+      {/* Where each chapter starts on the track, for the scrollbar's section tags. */}
+      {(Object.keys(chapters) as Chapter[]).map((ch) => (
+        <div key={ch} data-section={chapterNames[ch]} aria-hidden className="pointer-events-none absolute left-0 h-px w-px" style={{ top: `calc(${chapters[ch][0]} * (100% - 100vh))` }} />
+      ))}
       {/* Sticky makes its own stacking context, so the whole stage sits above the fixed canvas; it has no background, so the 3D shows through. */}
       <div
         className="sticky top-0 z-[15] h-svh select-none overflow-hidden"

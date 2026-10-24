@@ -96,7 +96,7 @@ const from = priceOf({ size: 30, goals: ["pillow-talk"], metal: "satin" }).total
 
 export default function RangeShelf() {
   return (
-    <section id="range" className="frame screen bg-white pb-24">
+    <section id="range" data-section="Range" className="frame screen bg-white pb-24">
       <div className="mb-12 grid grid-cols-1 items-end gap-6 md:mb-8 md:grid-cols-2">
         <h2 className="font-display text-5xl leading-none md:text-6xl">The range</h2>
         <p className="max-w-md text-lg leading-relaxed text-muted md:justify-self-end">
