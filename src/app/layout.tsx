@@ -21,6 +21,8 @@ export const metadata: Metadata = {
   openGraph: { type: "website", siteName: "Popsule", title: "Popsule · One jar for life, refills by the month.", description, url: "/" },
   twitter: { card: "summary_large_image" },
   alternates: { canonical: "/" },
+  // Google Search Console ownership check for https://popsule.vercel.app.
+  verification: { google: "KNuXOS850O6zdtNxo7hokx8y7WEXnuZ6WPqbDWoo9UQ" },
 };
 
 export const viewport: Viewport = { themeColor: "#ffffff" };
