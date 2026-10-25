@@ -4,6 +4,7 @@ import AppShell from "@/components/AppShell";
 import { preload } from "react-dom";
 import { modelUrl, siteUrl } from "@/lib/site";
 import { themeScript } from "@/lib/theme-script";
+import { preloadScript } from "@/lib/preload-script";
 import "./globals.css";
 
 // Type system: League Spartan headlines, DM Serif Display italic accents,
@@ -42,6 +43,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         {/* Sets the theme before the first paint, so dark mode never flashes light. */}
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        {/* Decides before the first paint whether this visit shows the preloader. */}
+        <script dangerouslySetInnerHTML={{ __html: preloadScript }} />
       </head>
       <body className="min-h-full">
         <a

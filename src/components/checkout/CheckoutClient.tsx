@@ -2,7 +2,7 @@
 
 import { useState, useSyncExternalStore, type ReactNode } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { transitionTo } from "@/components/PageTransition";
 import { ONCE_EXTRA, type Plan } from "@/lib/lab";
 import { arrival, deliveries, methods, priceOrder, saveOrder, type Delivery, type Method } from "@/lib/order";
 import { useBag, useBagReady } from "@/store/bag";
@@ -69,7 +69,6 @@ export default function CheckoutClient() {
   const [method, setMethod] = useState<Method>("Card");
   const [name, setName] = useState("");
   const [stage, setStage] = useState<"idle" | "paying" | "placing">("idle");
-  const router = useRouter();
   const now = useSyncExternalStore(noop, today, () => 0);
 
   if (!ready) return <div className="flex-1" />;
@@ -96,7 +95,7 @@ export default function CheckoutClient() {
     await new Promise((r) => setTimeout(r, 900));
     const order = saveOrder({ name: name.trim(), plan, delivery, method, lines, subtotal, shipping, total });
     // The confirmation page empties the bag once it's showing the order.
-    router.push(`/checkout/success?order=${order.number}`);
+    transitionTo(`/checkout/success?order=${order.number}`);
   };
 
   const busy = stage !== "idle";

@@ -6,6 +6,8 @@ import SmoothScroll from "./SmoothScroll";
 import Cursor from "./Cursor";
 import ScrollRail from "./ScrollRail";
 import BagDrawer from "./bag/BagDrawer";
+import Preloader from "./Preloader";
+import PageTransition from "./PageTransition";
 
 const Scene = dynamic(() => import("./canvas/Scene"), { ssr: false });
 
@@ -18,6 +20,8 @@ export default function AppShell({ children }: { children: ReactNode }) {
       <Scene eventSource={ref} />
       <ScrollRail />
       <BagDrawer />
+      <PageTransition />
+      <Preloader />
       <Cursor />
     </div>
   );

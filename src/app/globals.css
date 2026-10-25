@@ -378,3 +378,167 @@ em,
   transform-origin: 50% 90%;
   animation: intro-jar 1.4s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) both;
 }
+
+/* The first-visit preloader. It sits over everything until the page is ready,
+   then lifts like a lid. Later loads in the same visit skip it before paint. */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 96;
+  display: grid;
+  place-items: center;
+  background: var(--color-mist);
+  color: var(--color-graphite);
+  transition: translate 1s cubic-bezier(0.76, 0, 0.24, 1), border-radius 1s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.preloader.is-leaving {
+  translate: 0 -100%;
+  border-radius: 0 0 50% 50% / 0 0 12vh 12vh;
+}
+.preloader.is-leaving .preloader-mark {
+  scale: 0.8;
+  opacity: 0;
+  transition: scale 0.5s ease-in, opacity 0.4s ease-in;
+}
+html[data-preloaded] .preloader {
+  display: none;
+}
+
+/* The page-change curtain: graphite in both themes, it rises from below to
+   cover the page, then carries on up to reveal the next one. */
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: #2a2c30;
+  pointer-events: none;
+  visibility: hidden;
+  translate: 0 100%;
+  /* Its leading edge is curved while it moves, and flattens once it covers. */
+  border-radius: 50% 50% 0 0 / 12vh 12vh 0 0;
+}
+.curtain[data-phase="cover"] {
+  visibility: visible;
+  pointer-events: auto;
+  translate: 0 0;
+  border-radius: 0;
+  transition: translate 0.6s cubic-bezier(0.76, 0, 0.24, 1), border-radius 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.curtain[data-phase="reveal"] {
+  visibility: visible;
+  translate: 0 -100%;
+  border-radius: 0 0 50% 50% / 0 0 12vh 12vh;
+  transition: translate 0.75s cubic-bezier(0.76, 0, 0.24, 1), border-radius 0.75s cubic-bezier(0.76, 0, 0.24, 1);
+}
+/* The capsule's moment while the page changes: it pops in, fills with clay
+   from the bottom while making one full turn, then settles with a bounce and
+   a ripple. The curtain holds until it has finished (PageTransition HOLD).
+   The rules match cover and reveal alike, so nothing restarts as it lifts. */
+.curtain-word {
+  opacity: 0;
+  translate: 0 1rem;
+}
+.curtain-mark {
+  opacity: 0;
+}
+.curtain-ring {
+  position: absolute;
+  inset: 12%;
+  border: 2px solid var(--color-cta);
+  border-radius: 999px;
+  opacity: 0;
+}
+.capsule-fill {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.curtain:not([data-phase="idle"]) .curtain-mark {
+  animation:
+    capsule-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) 0.25s both,
+    capsule-turn 0.95s cubic-bezier(0.65, 0, 0.35, 1) 0.35s both;
+}
+.curtain:not([data-phase="idle"]) .capsule-fill {
+  animation: capsule-fill 0.85s cubic-bezier(0.65, 0, 0.35, 1) 0.4s both;
+}
+.curtain:not([data-phase="idle"]) .curtain-pop {
+  animation: capsule-pop 0.4s cubic-bezier(0.3, 1.6, 0.5, 1) 1.28s both;
+}
+.curtain:not([data-phase="idle"]) .curtain-ring {
+  animation: capsule-ring 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 1.28s forwards;
+}
+.curtain:not([data-phase="idle"]) .curtain-word {
+  animation: curtain-word 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) 0.55s both;
+}
+/* As it lifts, the mark and name drift up a little faster than the curtain. */
+.curtain[data-phase="reveal"] .curtain-pop,
+.curtain[data-phase="reveal"] .curtain-word {
+  translate: 0 -12vh;
+  opacity: 0;
+  transition: translate 0.6s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.4s;
+}
+@keyframes capsule-in {
+  from {
+    opacity: 0;
+    scale: 0.5;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@keyframes capsule-turn {
+  from {
+    rotate: -360deg;
+  }
+}
+@keyframes capsule-fill {
+  from {
+    transform: scaleY(0);
+  }
+}
+@keyframes capsule-pop {
+  0% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.18;
+  }
+  100% {
+    scale: 1;
+  }
+}
+@keyframes capsule-ring {
+  from {
+    opacity: 0.9;
+    scale: 0.7;
+  }
+  to {
+    opacity: 0;
+    scale: 2.2;
+  }
+}
+@keyframes curtain-word {
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* Intros wait while the preloader or the curtain is up, then play as it lifts. */
+html[data-preload] [class*="intro-"],
+html[data-curtain] [class*="intro-"] {
+  animation-play-state: paused;
+}
+html[data-entering] main {
+  animation: page-in 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes page-in {
+  from {
+    translate: 0 6vh;
+  }
+}
