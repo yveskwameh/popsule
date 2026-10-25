@@ -16,7 +16,8 @@ import {
 } from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 import { PerspectiveCamera } from "@react-three/drei";
-import { palette, products, toneHex } from "@/lib/brand";
+import { palette, products, surfaces, toneHex } from "@/lib/brand";
+import { useTheme } from "@/lib/theme";
 import { capsuleColors, type LabSnapshot } from "@/lib/lab";
 import { reducedMotion } from "@/lib/motion";
 import { chapters, ease, HANDLE_UNTIL, mix, rangeStep, seg, story } from "@/lib/story";
@@ -248,6 +249,7 @@ export default function StoryScene() {
   const size = useThree((s) => s.size);
   const wide = size.width > size.height * 0.9;
   const product = products[0];
+  const theme = useTheme();
 
   const world = useRef<Group>(null!);
   const jar = useRef<Group>(null!);
@@ -268,6 +270,7 @@ export default function StoryScene() {
   const handSpin = useRef({ v: 0, r: 0 });
   const slosh = useRef({ x: 0, v: 0 });
   const peekS = useRef(0);
+  const frames = useRef(0);
 
   const design: LabSnapshot = useMemo(
     () => ({
@@ -284,6 +287,8 @@ export default function StoryScene() {
   );
 
   useFrame((state, dt) => {
+    // Shaders compile on the first draw; by the third frame the jar is on screen.
+    if (++frames.current === 3) story.onReady?.();
     const p = story.p;
     const { camera } = state;
 
@@ -472,7 +477,7 @@ export default function StoryScene() {
       {/* Mist backdrop so the frosted glass has a room to refract. */}
       <mesh position={[0, 3, -9]} scale={[90, 40, 1]}>
         <planeGeometry />
-        <meshBasicMaterial color={palette.mist} toneMapped={false} />
+        <meshBasicMaterial color={surfaces.mist[theme]} toneMapped={false} />
       </mesh>
       <group ref={world}>
         <group ref={jar}>

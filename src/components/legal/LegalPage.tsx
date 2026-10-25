@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 export type Section = { id: string; title: string; tag?: string; body: ReactNode }; // tag: one or two words for the scrollbar
 
@@ -12,9 +13,12 @@ export default function LegalPage({ eyebrow, title, intro, updated, sections }: 
         <Link href="/" className="font-display text-3xl">
           Popsule
         </Link>
-        <Link href="/" className="text-lg text-muted hover:text-graphite">
-          Back to the shop
-        </Link>
+        <span className="flex items-center gap-4">
+          <Link href="/" className="text-lg text-muted hover:text-graphite">
+            Back to the shop
+          </Link>
+          <ThemeToggle />
+        </span>
       </header>
 
       <div className="frame pb-24 pt-10 md:pt-16">

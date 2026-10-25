@@ -26,7 +26,7 @@ export default function Receipt() {
       <div className="m-auto flex flex-col items-center gap-4 pb-16 text-center">
         <h1 className="font-display text-5xl leading-none md:text-6xl">We couldn&apos;t find that order.</h1>
         <p className="max-w-md text-lg text-muted">It may have been placed in another browser. Your bag is still waiting.</p>
-        <Link href="/build" className="mt-2 inline-flex h-12 items-center rounded-full bg-graphite px-7 text-lg text-white hover:bg-black">
+        <Link href="/build" className="mt-2 inline-flex h-12 items-center rounded-full bg-cta px-7 text-lg text-on-cta hover:bg-cta-hover">
           Back to your jar
         </Link>
       </div>

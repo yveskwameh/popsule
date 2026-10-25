@@ -2,11 +2,11 @@
 
 import { Suspense, useMemo, useState } from "react";
 import Link from "next/link";
-import { View } from "@react-three/drei";
 import { products, toneHex, type ProductId } from "@/lib/brand";
 import { encodeSnapshot, MAX_GOALS, priceOf, sizes, startingSnapshot, type Metal } from "@/lib/lab";
 import ProductPair from "@/components/product/ProductPair";
 import StudioLights from "@/components/canvas/StudioLights";
+import NearView from "@/components/canvas/NearView";
 import FitCamera from "@/components/canvas/FitCamera";
 import Backdrop from "@/components/canvas/Backdrop";
 import { allHandling, useHand } from "@/components/product/Handled";
@@ -29,7 +29,7 @@ export default function PriceBuilder() {
     setGoals((g) => (g.includes(id) ? (g.length > 1 ? g.filter((x) => x !== id) : g) : g.length < MAX_GOALS ? [...g, id] : g));
 
   return (
-    <section id="pricing" data-section="Pricing" className="frame screen bg-mist py-24">
+    <section id="pricing" data-section="Pricing" className="block-sand frame screen bg-mist py-24">
       <div className="mb-12 grid grid-cols-1 items-end gap-6 md:mb-8 md:grid-cols-2">
         <h2 className="font-display text-5xl leading-none md:text-6xl">One price a month</h2>
         <p className="max-w-md text-lg leading-relaxed text-muted md:justify-self-end">
@@ -122,7 +122,7 @@ export default function PriceBuilder() {
             <Link
               href={`/build?d=${encodeSnapshot(design)}`}
               data-magnetic
-              className="inline-flex h-12 items-center rounded-full bg-graphite px-7 text-lg text-white hover:bg-black"
+              className="inline-flex h-12 items-center rounded-full bg-cta px-7 text-lg text-on-cta hover:bg-cta-hover"
             >
               Start with this
             </Link>
@@ -131,16 +131,16 @@ export default function PriceBuilder() {
 
         <div className="md:h-full">
           <div className={`h-[46vh] select-none md:h-full ${handle.cursor}`} {...handle.props}>
-            <View className="h-full w-full">
+            <NearView className="h-full w-full">
               <FitCamera width={4.3} minDistance={7.6} />
               <StudioLights />
               <Suspense fallback={null}>
-                <Backdrop />
+                <Backdrop surface="sand" />
                 <group position-y={-0.85}>
                   <ProductPair design={design} handle={{ hand: handle.hand, handling: allHandling }} backdrop={false} />
                 </group>
               </Suspense>
-            </View>
+            </NearView>
           </div>
         </div>
       </div>

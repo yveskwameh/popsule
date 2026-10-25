@@ -2,11 +2,11 @@
 
 import { useGLTF } from "@react-three/drei";
 import { BufferAttribute, type BufferGeometry, type Mesh } from "three";
+import { modelUrl as URL } from "@/lib/site";
 
 // Geometry built in Blender by blender/models.py, then meshopt-compressed
 // (command at the top of that file). Materials are assigned in code so every product can
 // recolour the same meshes.
-const URL = "/models/popsule.glb";
 
 export const JAR = { height: 1.45, labelCenter: 0.77, lidBase: 1.43 };
 export const CAN = { height: 1.35, labelCenter: 0.875, lidBase: 1.3 };

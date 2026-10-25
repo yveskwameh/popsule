@@ -2,11 +2,11 @@
 
 import { Suspense } from "react";
 import Link from "next/link";
-import { View } from "@react-three/drei";
 import { products, toneHex, type Product } from "@/lib/brand";
 import { capsuleColors, encodeSnapshot, priceOf, startingSnapshot } from "@/lib/lab";
 import Jar from "@/components/product/Jar";
 import StudioLights from "@/components/canvas/StudioLights";
+import NearView from "@/components/canvas/NearView";
 import FitCamera from "@/components/canvas/FitCamera";
 import SoftShadow from "@/components/canvas/SoftShadow";
 import Backdrop from "@/components/canvas/Backdrop";
@@ -41,13 +41,13 @@ function Card({ product: p }: { product: Product }) {
   return (
     <div className="flex h-full flex-col overflow-hidden rounded-3xl bg-mist">
       <div className={`aspect-[4/5] w-full select-none px-2 pt-2 md:aspect-auto md:h-[32svh] ${handle.cursor}`} {...handle.props}>
-        <View className="h-full w-full">
+        <NearView className="h-full w-full">
           <FitCamera width={2} minDistance={6.2} height={0.6} />
           <StudioLights />
           <Suspense fallback={null}>
             <ShelfJar product={p} hand={handle.hand} />
           </Suspense>
-        </View>
+        </NearView>
       </div>
       <div className="flex flex-1 flex-col gap-3 px-5 pb-5">
         <span className="font-display text-4xl leading-none">{p.name}</span>
@@ -61,7 +61,7 @@ function Card({ product: p }: { product: Product }) {
             </li>
           ))}
         </ul>
-        {/* A dark arrow circle that stretches open under the words on hover. */}
+        {/* A clay arrow circle that stretches open under the words on hover. */}
         <Link
           href={`/build?d=${encodeSnapshot(startingSnapshot(p.id))}`}
           data-magnetic
@@ -69,7 +69,7 @@ function Card({ product: p }: { product: Product }) {
         >
           <span
             aria-hidden
-            className="absolute inset-y-0 left-0 w-12 rounded-full bg-graphite transition-[width] duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:w-full group-focus-visible:w-full"
+            className="absolute inset-y-0 left-0 w-12 rounded-full bg-cta transition-[width] duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:w-full group-focus-visible:w-full"
           />
           <svg
             aria-hidden
@@ -81,11 +81,11 @@ function Card({ product: p }: { product: Product }) {
             strokeWidth="1.8"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="absolute left-3.5 text-white transition-transform duration-500 group-hover:translate-x-1"
+            className="absolute left-3.5 text-on-cta transition-transform duration-500 group-hover:translate-x-1"
           >
             <path d="M5 12h14M13 6l6 6-6 6" />
           </svg>
-          <span className="relative transition-colors duration-300 group-hover:text-white group-focus-visible:text-white">Make it yours</span>
+          <span className="relative transition-colors duration-300 group-hover:text-on-cta group-focus-visible:text-on-cta">Make it yours</span>
         </Link>
       </div>
     </div>

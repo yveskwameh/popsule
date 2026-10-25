@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { lenis } from "./SmoothScroll";
 
 // The page's scrollbar: a short column centred on the left edge, with a tick
@@ -111,7 +111,8 @@ export default function ScrollRail() {
   const show = awake ? "opacity-100" : "opacity-0";
 
   return (
-    <nav aria-label="Sections" className="group fixed left-3 top-1/2 z-50 hidden -translate-y-1/2 md:block">
+    <nav aria-label="Sections" className="intro-fade group fixed left-3 top-1/2 z-50 hidden -translate-y-1/2 md:block"
+      style={{ "--d": "1.2s" } as CSSProperties}>
       {/* A soft panel behind the names while you hover, so they read over anything. */}
       {named && (
         <div className="pointer-events-none absolute -inset-y-4 -left-3 w-40 rounded-r-3xl bg-white/85 opacity-0 backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100" />

@@ -63,7 +63,7 @@ export default function BagDrawer() {
             </div>
             <p className="text-xl">Your bag is empty.</p>
             <p className="-mt-3 text-base text-muted">Build a jar with your name on it, and it lands here.</p>
-            <Link href="/build" onClick={() => setOpen(false)} data-magnetic className="inline-flex h-12 items-center rounded-full bg-graphite px-7 text-lg text-white hover:bg-black">
+            <Link href="/build" onClick={() => setOpen(false)} data-magnetic className="inline-flex h-12 items-center rounded-full bg-cta px-7 text-lg text-on-cta hover:bg-cta-hover">
               Build your jar
             </Link>
           </div>
@@ -147,7 +147,7 @@ export default function BagDrawer() {
                 href="/checkout"
                 onClick={() => setOpen(false)}
                 data-magnetic
-                className="inline-flex h-14 items-center justify-center rounded-full bg-graphite text-lg text-white hover:bg-black"
+                className="inline-flex h-14 items-center justify-center rounded-full bg-cta text-lg text-on-cta hover:bg-cta-hover"
               >
                 {plan === "monthly" ? "Start my refills" : "Checkout"}
               </Link>

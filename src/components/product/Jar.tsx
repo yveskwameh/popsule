@@ -4,6 +4,7 @@ import type { Ref } from "react";
 import type { Group, Plane } from "three";
 import type { ThreeElements } from "@react-three/fiber";
 import { palette } from "@/lib/brand";
+import { useTheme } from "@/lib/theme";
 import type { Glass, LabelFont, Metal } from "@/lib/lab";
 import { JAR, useParts } from "./model";
 import { brushedTexture, useLabelTexture } from "./textures";
@@ -26,6 +27,9 @@ export default function Jar({ lid, glass, metal, scale: k = 1, label, capsules, 
   const parts = useParts();
   const map = useLabelTexture(label.text, label.font, palette.graphite);
   const rise = (k - 1) * JAR.lidBase;
+  // Against a dark room fully see-through frost turns black and hides the
+  // print; letting some of the glass's own white through keeps it milky.
+  const frost = useTheme() === "dark" && glass === "frosted" ? 0.6 : 1;
 
   return (
     <group {...group}>
@@ -33,7 +37,7 @@ export default function Jar({ lid, glass, metal, scale: k = 1, label, capsules, 
         <meshPhysicalMaterial
           key={glass}
           color="#F4F6F5"
-          transmission={1}
+          transmission={frost}
           roughness={glass === "frosted" ? 0.34 : 0.04}
           thickness={0.35}
           ior={1.5}
@@ -47,7 +51,7 @@ export default function Jar({ lid, glass, metal, scale: k = 1, label, capsules, 
       </group>
       <group position-y={rise}>
         <mesh geometry={parts.Jar_Thread}>
-          <meshPhysicalMaterial color="#F4F6F5" transmission={1} roughness={0.3} thickness={0.05} />
+          <meshPhysicalMaterial color="#F4F6F5" transmission={frost} roughness={0.3} thickness={0.05} />
         </mesh>
         <group ref={rig?.lid}>
           <mesh geometry={parts.Jar_Lid}>

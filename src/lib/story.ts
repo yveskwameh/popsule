@@ -11,6 +11,8 @@ export const story = {
   // it, the page records drags and clicks.
   overJar: false,
   hand: { pressed: false, dragging: false, lastX: 0, moved: 0, velocity: 0, openedAt: -1 },
+  // Called once the live scene has drawn, so the page can drop its poster.
+  onReady: null as (() => void) | null,
 };
 
 // The hero jar is only handled while the hero is on screen.

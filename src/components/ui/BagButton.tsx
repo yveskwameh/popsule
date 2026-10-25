@@ -1,10 +1,10 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useSyncExternalStore, type CSSProperties } from "react";
 import { useBag } from "@/store/bag";
 
 // A shopping bag with the number of jars in it. Opens the bag drawer.
-export default function BagButton({ className = "" }: { className?: string }) {
+export default function BagButton({ className = "", style }: { className?: string; style?: CSSProperties }) {
   const count = useBag((s) => s.items.reduce((n, x) => n + x.qty, 0));
   // The bag lives in localStorage, so only show the count after hydration.
   const ready = useSyncExternalStore(
@@ -21,6 +21,7 @@ export default function BagButton({ className = "" }: { className?: string }) {
       data-magnetic
       onClick={() => useBag.getState().setOpen(true)}
       className={`relative grid h-11 w-11 place-items-center rounded-full bg-mist text-graphite hover:bg-line ${className}`}
+      style={style}
     >
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
         <path d="M5.5 8h13l-1 12.5h-11z" />

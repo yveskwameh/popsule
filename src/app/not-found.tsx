@@ -17,7 +17,7 @@ export default function NotFound() {
         </h1>
         <p className="max-w-md text-lg text-muted">The page you were after isn&apos;t here. Your jar might be, though.</p>
         <div className="mt-2 flex flex-wrap justify-center gap-3">
-          <Link href="/build" data-magnetic className="inline-flex h-12 items-center rounded-full bg-graphite px-7 text-lg text-white hover:bg-black">
+          <Link href="/build" data-magnetic className="inline-flex h-12 items-center rounded-full bg-cta px-7 text-lg text-on-cta hover:bg-cta-hover">
             Build your jar
           </Link>
           <Link href="/" data-magnetic className="inline-flex h-12 items-center rounded-full border border-graphite px-7 text-lg hover:bg-mist">

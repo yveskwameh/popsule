@@ -11,6 +11,22 @@ export const palette = {
   steel: "#C9CCD1",
 } as const;
 
+export type Theme = "light" | "dark";
+
+// What a 3D view sits on, per theme, so its backdrop melts into the page. Keep
+// in sync with the dark theme and colour blocks in app/globals.css.
+export const surfaces = {
+  mist: { light: "#F4F3F0", dark: "#17181B" },
+  // The card inside the sage block (How it works).
+  sage: { light: "#4A5749", dark: "#344033" },
+  // The sand block itself (Pricing).
+  sand: { light: "#EDE6D8", dark: "#24211C" },
+  // The footer's call-to-action card, dark in both themes.
+  ink: { light: "#2A2C30", dark: "#2A2C30" },
+} as const;
+
+export type Surface = keyof typeof surfaces;
+
 export const tones = [
   { id: "sage", name: "Sage", hex: "#8E9A86" },
   { id: "clay", name: "Clay", hex: "#B98B6E" },

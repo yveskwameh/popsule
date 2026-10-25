@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef, useState, type AnimationEvent, type CSSProperties } from "react";
 import Link from "next/link";
 import { View } from "@react-three/drei";
 import { gsap, useGSAP } from "@/lib/gsap";
@@ -41,6 +41,17 @@ const stats = [
 // The pinned film at the top of the home page.
 export default function HomeStory() {
   const track = useRef<HTMLDivElement>(null!);
+  // The poster covers the live scene until the intro has played and the
+  // live jar has drawn underneath it, then fades to reveal it.
+  const [ready, setReady] = useState(false);
+  const [introDone, setIntroDone] = useState(false);
+
+  useEffect(() => {
+    story.onReady = () => setReady(true);
+    return () => {
+      story.onReady = null;
+    };
+  }, []);
 
   useEffect(() => {
     const move = (e: PointerEvent) => {
@@ -173,31 +184,71 @@ export default function HomeStory() {
           </Suspense>
         </View>
 
+        {/* A still of the opening frame, rendered from this scene, so the jar is
+            there with the headline and can rise in on load. Its mist ground hides
+            the live scene while it warms up; once both are done it fades away. */}
+        <div
+          aria-hidden
+          className={`pointer-events-none absolute inset-0 bg-mist transition-opacity duration-700 ${ready && introDone ? "opacity-0" : ""}`}
+          onAnimationEnd={(e: AnimationEvent) => e.animationName === "intro-jar" && setIntroDone(true)}
+        >
+          <div className="hero-poster">
+            <div className="intro-jar" style={{ "--d": "0.4s" } as CSSProperties} />
+          </div>
+        </div>
+
         <div className="pointer-events-none absolute inset-0">
           {/* 0 · Hero */}
           <div data-ch="hero" className="absolute inset-x-0 top-0 frame pt-24 md:inset-y-0 md:flex md:items-center md:pt-0">
             <div data-block className="flex max-w-xl flex-col gap-5 md:gap-6">
-              <p className="text-base italic text-muted md:text-lg">Personal supplements, made to keep</p>
+              {/* The page-load intro animates inner spans, so it never fights the
+                  scroll timeline, which moves these blocks themselves. */}
+              <p className="text-base italic text-muted md:text-lg">
+                <span className="intro-rise block" style={{ "--d": "0.35s" } as CSSProperties}>
+                  Personal supplements, made to keep
+                </span>
+              </p>
               <h1 className="font-display text-5xl leading-[0.95] md:text-7xl xl:text-8xl">
-                One jar for life,
-                <br />
-                <em>refills by the month.</em>
+                <span className="intro-mask">
+                  <span className="intro-line" style={{ "--d": "0.45s" } as CSSProperties}>
+                    One jar for life,
+                  </span>
+                </span>
+                <span className="intro-mask">
+                  <em className="intro-line" style={{ "--d": "0.58s" } as CSSProperties}>
+                    refills by the month.
+                  </em>
+                </span>
               </h1>
               <p className="max-w-md text-lg leading-relaxed md:text-xl">
-                Your formula, printed on a frosted glass jar you keep. Each month a metal refill arrives to top it up.
+                <span className="intro-rise block" style={{ "--d": "0.78s" } as CSSProperties}>
+                  Your formula, printed on a frosted glass jar you keep. Each month a metal refill arrives to top it up.
+                </span>
               </p>
               <div className="pointer-events-auto flex flex-wrap gap-3">
-                <Link href="/build" data-magnetic className="inline-flex h-12 items-center rounded-full bg-graphite px-7 text-lg text-white hover:bg-black md:h-14 md:px-8">
+                <Link
+                  href="/build"
+                  data-magnetic
+                  className="intro-rise inline-flex h-12 items-center rounded-full bg-cta px-7 text-lg text-on-cta hover:bg-cta-hover md:h-14 md:px-8"
+                  style={{ "--d": "0.9s" } as CSSProperties}
+                >
                   Design yours
                 </Link>
-                <a href="#range" data-magnetic className="inline-flex h-12 items-center rounded-full border border-graphite px-7 text-lg hover:bg-white md:h-14 md:px-8">
+                <a
+                  href="#range"
+                  data-magnetic
+                  className="intro-rise inline-flex h-12 items-center rounded-full border border-graphite px-7 text-lg hover:bg-white md:h-14 md:px-8"
+                  style={{ "--d": "0.98s" } as CSSProperties}
+                >
                   See the range
                 </a>
               </div>
             </div>
           </div>
           <p data-cue className="absolute inset-x-0 bottom-6 text-center text-base italic text-muted">
-            Scroll to open the jar
+            <span className="intro-fade inline-block" style={{ "--d": "1.5s" } as CSSProperties}>
+              Scroll to open the jar
+            </span>
           </p>
 
           {/* 1 · Anatomy */}
@@ -310,7 +361,7 @@ export default function HomeStory() {
                     <Link
                       href={`/build?d=${encodeSnapshot(startingSnapshot(p.id))}`}
                       data-magnetic
-                      className="pointer-events-auto mt-6 inline-flex h-12 items-center whitespace-nowrap rounded-full bg-graphite px-7 text-lg text-white hover:bg-black"
+                      className="pointer-events-auto mt-6 inline-flex h-12 items-center whitespace-nowrap rounded-full bg-cta px-7 text-lg text-on-cta hover:bg-cta-hover"
                     >
                       Make {p.name} yours
                     </Link>

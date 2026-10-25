@@ -2,11 +2,11 @@
 
 import { Suspense, useState } from "react";
 import Link from "next/link";
-import { View } from "@react-three/drei";
 import { palette, products, toneHex } from "@/lib/brand";
 import { capsuleColors, encodeSnapshot, startingSnapshot } from "@/lib/lab";
 import Jar from "@/components/product/Jar";
 import StudioLights from "@/components/canvas/StudioLights";
+import NearView from "@/components/canvas/NearView";
 import FitCamera from "@/components/canvas/FitCamera";
 import Handled, { allHandling, useHand } from "@/components/product/Handled";
 import SoftShadow from "@/components/canvas/SoftShadow";
@@ -29,7 +29,7 @@ export default function Footer() {
     <footer data-section="Get yours" className="bg-white">
       {/* Closing call to action. */}
       <div className="frame">
-        <div className="grid grid-cols-1 items-center overflow-hidden rounded-3xl bg-graphite text-white md:grid-cols-2">
+        <div className="block-ink grid grid-cols-1 items-center overflow-hidden rounded-3xl bg-graphite text-white md:grid-cols-2">
           <div className="flex flex-col gap-6 p-8 md:p-14">
             <p className="text-lg italic text-white/60">Ready when you are</p>
             <h2 className="font-display text-5xl leading-none md:text-6xl">Your jar is waiting.</h2>
@@ -37,7 +37,7 @@ export default function Footer() {
               Build your formula in a few minutes. The jar arrives with your first refill, printed with your name.
             </p>
             <div className="flex flex-wrap gap-3">
-              <Link href="/build" data-magnetic className="inline-flex h-14 items-center rounded-full bg-white px-8 text-lg text-graphite hover:bg-mist">
+              <Link href="/build" data-magnetic className="inline-flex h-14 items-center rounded-full bg-cta px-8 text-lg text-on-cta hover:bg-cta-hover">
                 Design yours
               </Link>
               <a href="#range" data-magnetic className="inline-flex h-14 items-center rounded-full px-6 text-lg text-white/80 hover:text-white">
@@ -46,7 +46,7 @@ export default function Footer() {
             </div>
           </div>
           <div className={`h-72 select-none p-2 md:h-[30rem] ${handle.cursor}`} {...handle.props}>
-            <View className="h-full w-full">
+            <NearView className="h-full w-full">
               <FitCamera width={2.4} minDistance={6.4} height={0.55} />
               <StudioLights />
               <Suspense fallback={null}>
@@ -70,7 +70,7 @@ export default function Footer() {
                   </Handled>
                 </group>
               </Suspense>
-            </View>
+            </NearView>
           </div>
         </div>
       </div>
@@ -115,7 +115,7 @@ export default function Footer() {
                 aria-label="Your email"
                 className="min-w-0 flex-1 bg-transparent text-lg outline-none placeholder:text-muted"
               />
-              <button type="submit" data-magnetic className="h-11 shrink-0 rounded-full bg-graphite px-5 text-lg text-white hover:bg-black">
+              <button type="submit" data-magnetic className="h-11 shrink-0 rounded-full bg-cta px-5 text-lg text-on-cta hover:bg-cta-hover">
                 Sign up
               </button>
             </form>

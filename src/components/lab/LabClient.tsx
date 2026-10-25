@@ -17,6 +17,7 @@ import { allHandling, useHand } from "@/components/product/Handled";
 import { Pair, Tones } from "@/components/ui/choices";
 import { IconButton } from "@/components/ui/controls";
 import BagButton from "@/components/ui/BagButton";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 import { copyText, downloadPoster, shareUrl } from "./share";
 
 // Build your jar: the jar and refill on a big stage, every choice beside it
@@ -211,7 +212,7 @@ function Checkout() {
           timer.current = setTimeout(() => setAdded(false), 2000);
         }}
         data-magnetic
-        className="inline-flex h-12 shrink-0 items-center rounded-full bg-white px-6 text-lg text-graphite transition-colors hover:bg-mist active:scale-[0.98] xl:h-14 xl:px-8"
+        className="inline-flex h-12 shrink-0 items-center rounded-full bg-cta px-6 text-lg text-on-cta transition-colors hover:bg-cta-hover active:scale-[0.98] xl:h-14 xl:px-8"
       >
         <span aria-live="polite">{added ? "Added" : "Add to bag"}</span>
       </button>
@@ -410,7 +411,10 @@ export default function LabClient() {
         <Link href="/" className="font-display text-3xl">
           Popsule
         </Link>
-        <BagButton />
+        <span className="flex items-center gap-1">
+          <ThemeToggle />
+          <BagButton />
+        </span>
       </header>
 
       <div className="frame flex min-h-0 flex-1 flex-col gap-3 pb-3 md:flex-row md:gap-5 md:pb-6">

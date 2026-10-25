@@ -1,7 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Serif_Display, League_Spartan, Urbanist } from "next/font/google";
 import AppShell from "@/components/AppShell";
-import { siteUrl } from "@/lib/site";
+import { preload } from "react-dom";
+import { modelUrl, siteUrl } from "@/lib/site";
+import { themeScript } from "@/lib/theme-script";
 import "./globals.css";
 
 // Type system: League Spartan headlines, DM Serif Display italic accents,
@@ -25,11 +27,22 @@ export const metadata: Metadata = {
   verification: { google: "KNuXOS850O6zdtNxo7hokx8y7WEXnuZ6WPqbDWoo9UQ" },
 };
 
-export const viewport: Viewport = { themeColor: "#ffffff" };
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#17181b" },
+  ],
+};
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  // Fetch the model alongside the 3D code instead of after it.
+  preload(modelUrl, { as: "fetch", crossOrigin: "anonymous" });
   return (
-    <html lang="en" className={`${spartan.variable} ${dmSerif.variable} ${urbanist.variable} antialiased`}>
+    <html lang="en" className={`${spartan.variable} ${dmSerif.variable} ${urbanist.variable} antialiased`} data-theme="light" suppressHydrationWarning>
+      <head>
+        {/* Sets the theme before the first paint, so dark mode never flashes light. */}
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="min-h-full">
         <a
           href="#main"

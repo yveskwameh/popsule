@@ -3,7 +3,6 @@
 import { Suspense, useRef, useState, type ReactNode } from "react";
 import { Color, Euler, Matrix4, Quaternion, Vector3, type Group, type InstancedMesh } from "three";
 import { useFrame } from "@react-three/fiber";
-import { View } from "@react-three/drei";
 import { products, toneHex } from "@/lib/brand";
 import { capsuleColors, startingSnapshot } from "@/lib/lab";
 import { reducedMotion } from "@/lib/motion";
@@ -11,6 +10,7 @@ import ProductPair from "@/components/product/ProductPair";
 import Jar from "@/components/product/Jar";
 import { useParts } from "@/components/product/model";
 import StudioLights from "@/components/canvas/StudioLights";
+import NearView from "@/components/canvas/NearView";
 import FitCamera from "@/components/canvas/FitCamera";
 import SoftShadow from "@/components/canvas/SoftShadow";
 import Backdrop from "@/components/canvas/Backdrop";
@@ -98,7 +98,7 @@ const pair = { ...startingSnapshot("pillow-talk"), goals: goals.map((g) => g.id)
 function HowScene({ step, hand }: { step: number; hand: Hand }) {
   return (
     <group position-y={-0.95}>
-      <Backdrop />
+      <Backdrop surface="sage" />
       <Stage on={step === 0}>
         <Formula />
         <SoftShadow position={[0, 0.002, 0]} size={2.6} opacity={0.12} />
@@ -132,7 +132,7 @@ export default function HowItWorks() {
   const handle = useHand(allHandling);
 
   return (
-    <section id="how" data-section="How it works" className="frame screen bg-white py-24">
+    <section id="how" data-section="How it works" className="block-sage frame screen bg-white py-24">
       <div className="mb-12 grid grid-cols-1 items-end gap-6 md:mb-8 md:grid-cols-2">
         <h2 className="font-display text-5xl leading-none md:text-6xl">How it works</h2>
         <p className="max-w-md text-lg leading-relaxed text-muted md:justify-self-end">
@@ -181,13 +181,13 @@ export default function HowItWorks() {
         </ol>
 
         <div className={`h-[46vh] select-none overflow-hidden rounded-3xl bg-mist p-2 md:h-full ${step > 0 ? handle.cursor : ""}`} {...handle.props}>
-          <View className="h-full w-full">
+          <NearView className="h-full w-full">
             <FitCamera width={4.4} minDistance={8.6} />
             <StudioLights />
             <Suspense fallback={null}>
               <HowScene step={step} hand={handle.hand} />
             </Suspense>
-          </View>
+          </NearView>
         </div>
       </div>
     </section>

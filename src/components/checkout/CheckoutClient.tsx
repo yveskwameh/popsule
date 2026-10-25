@@ -79,7 +79,7 @@ export default function CheckoutClient() {
       <div className="m-auto flex flex-col items-center gap-5 pb-16 text-center">
         <h1 className="font-display text-5xl leading-none md:text-6xl">Your bag is empty.</h1>
         <p className="text-lg text-muted">Build a jar with your name on it, then come back here.</p>
-        <Link href="/build" data-magnetic className="inline-flex h-12 items-center rounded-full bg-graphite px-7 text-lg text-white hover:bg-black">
+        <Link href="/build" data-magnetic className="inline-flex h-12 items-center rounded-full bg-cta px-7 text-lg text-on-cta hover:bg-cta-hover">
           Build your jar
         </Link>
       </div>
@@ -214,7 +214,7 @@ export default function CheckoutClient() {
             onClick={place}
             disabled={busy}
             data-magnetic
-            className="relative inline-flex h-14 items-center justify-center overflow-hidden rounded-full bg-graphite text-lg text-white hover:bg-black disabled:cursor-progress"
+            className="relative inline-flex h-14 items-center justify-center overflow-hidden rounded-full bg-cta text-lg text-on-cta hover:bg-cta-hover disabled:cursor-progress"
           >
             {/* Fills while the order goes through. */}
             <span

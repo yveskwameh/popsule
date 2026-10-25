@@ -2,11 +2,11 @@
 
 import { Suspense, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
-import { View } from "@react-three/drei";
 import type { ToneId } from "@/lib/brand";
 import { encodeSnapshot, LABEL_MAX, priceOf, startingSnapshot, type Glass, type LabelFont } from "@/lib/lab";
 import ProductPair from "@/components/product/ProductPair";
 import StudioLights from "@/components/canvas/StudioLights";
+import NearView from "@/components/canvas/NearView";
 import FitCamera from "@/components/canvas/FitCamera";
 import Backdrop from "@/components/canvas/Backdrop";
 import { allHandling, useHand } from "@/components/product/Handled";
@@ -57,7 +57,7 @@ export default function NameTeaser() {
 
       <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-3xl bg-mist">
         <div className={`h-[52vh] min-h-0 select-none px-2 pt-2 md:h-auto md:flex-1 ${handle.cursor}`} {...handle.props}>
-          <View className="h-full w-full">
+          <NearView className="h-full w-full">
             <FitCamera width={4.4} minDistance={6.6} />
             <StudioLights />
             <Suspense fallback={null}>
@@ -66,7 +66,7 @@ export default function NameTeaser() {
                 <ProductPair design={design} handle={{ hand: handle.hand, handling: allHandling }} backdrop={false} />
               </group>
             </Suspense>
-          </View>
+          </NearView>
         </div>
 
         <div className="pointer-events-none absolute inset-x-0 top-0 z-[15] flex items-start justify-between gap-4 p-5 md:p-8">
@@ -77,7 +77,7 @@ export default function NameTeaser() {
           <Link
             href={`/build?d=${encodeSnapshot(design)}`}
             data-magnetic
-            className="pointer-events-auto ml-auto inline-flex h-10 items-center whitespace-nowrap rounded-full bg-graphite px-5 text-base text-white hover:bg-black md:h-12 md:px-6 md:text-lg"
+            className="pointer-events-auto ml-auto inline-flex h-10 items-center whitespace-nowrap rounded-full bg-cta px-5 text-base text-on-cta hover:bg-cta-hover md:h-12 md:px-6 md:text-lg"
           >
             Build the rest
           </Link>

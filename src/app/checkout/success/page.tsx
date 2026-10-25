@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 import Receipt from "@/components/checkout/Receipt";
 
 export const metadata = {
@@ -14,9 +15,12 @@ export default function Success() {
         <Link href="/" className="font-display text-3xl">
           Popsule
         </Link>
-        <Link href="/" className="text-lg text-muted hover:text-graphite">
-          Back to the shop
-        </Link>
+        <span className="flex items-center gap-4">
+          <Link href="/" className="text-lg text-muted hover:text-graphite">
+            Back to the shop
+          </Link>
+          <ThemeToggle />
+        </span>
       </header>
       <div className="frame flex min-h-0 flex-1 flex-col">
         <Suspense fallback={<div className="flex-1" />}>
